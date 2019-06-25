@@ -27,14 +27,15 @@ public class FileCleaner {
     private static String MAVEN_ROOT_PATH =
             SystemConf.config(Const.FILE_SCHEMA, Const.MAVEN_ROOT_PATH);
     /** 将要删除的文件夹包含的文件 */
-    private static final String lastUpdated_File_extension =
+    private static final String lastUpdatedFile =
             SystemConf.config(Const.FILE_EXTENSION_LAST_UPDATED);
     /** jar包 */
-    private static final String jar_File_extension = SystemConf.config(Const.FILE_EXTENSION_JAR);
+    private static final String jarFile = SystemConf.config(Const.FILE_EXTENSION_JAR);
 
     private static final List<String> fileName = new ArrayList<>();
     /** 只要包含.lastUpdated文件就删除对应目录,默认为false */
     private static boolean cleanAll = false;
+
     private static boolean delete = false;
 
     public static void main(String[] args) throws URISyntaxException {
@@ -69,7 +70,7 @@ public class FileCleaner {
     private static void cleanAbnormalDir(File file) {
         fileName.clear();
         if (file.isDirectory() && isAbnormalDir(file)) {
-            if(delete) fileDelete(file);
+            if (delete) fileDelete(file);
             System.out.println("删除目录：" + file.getAbsolutePath() + ", " + fileName.toString());
         } else if (file.isDirectory()) {
             File[] files = file.listFiles();
@@ -99,10 +100,10 @@ public class FileCleaner {
         boolean hasAbnormal = false;
         boolean hasJar = false;
         for (File f : files) {
-            if (f.getName().endsWith(lastUpdated_File_extension)) {
+            if (f.getName().endsWith(lastUpdatedFile)) {
                 hasAbnormal = true;
             }
-            if (f.getName().endsWith(jar_File_extension)) {
+            if (f.getName().endsWith(jarFile)) {
                 hasJar = true;
             }
             fileName.add(f.getName());
